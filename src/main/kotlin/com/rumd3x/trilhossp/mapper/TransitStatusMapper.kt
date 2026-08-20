@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component
 
 @Component
 class TransitStatusMapper {
-
     fun toLines(response: TransitStatusResponse): List<Line> =
         response.empresas.flatMap { empresa ->
             val company = Company(id = empresa.id, name = empresa.nome, isArtespMonitored = empresa.fiscalizacaoArtesp)
@@ -18,13 +17,14 @@ class TransitStatusMapper {
                     name = linha.nome,
                     code = linha.codigo,
                     company = company,
-                    status = LineStatus(
-                        situation = linha.status.situacao,
-                        classification = linha.status.classificacao,
-                        isNormal = linha.status.operacaoNormal,
-                        updatedAt = linha.status.atualizadoEm,
-                    ),
-                    stations = linha.estacoes.nomes.map { Station(name = it) },
+                    status =
+                        LineStatus(
+                            situation = linha.status.situacao,
+                            classification = linha.status.classificacao,
+                            isNormal = linha.status.operacaoNormal,
+                            updatedAt = linha.status.atualizadoEm,
+                        ),
+                    stations = linha.estacoes?.nomes?.map { Station(name = it) } ?: emptyList(),
                 )
             }
         }

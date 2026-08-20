@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Trilhos SP – Status das Linhas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f8f9fa; display: flex; flex-direction: column; min-height: 100vh; }
+        main { flex: 1; }
+        .navbar-brand span { letter-spacing: -.5px; }
+        .line-card {
+            border-radius: 10px;
+            padding: 14px 16px;
+            height: 100%;
+        }
+        /* level 0 = neutral (encerrada) */
+        .line-level-0 { background-color: #6c757d; color: #fff; }
+        /* level 1 = normal */
+        .line-level-1 { background-color: #198754; color: #fff; }
+        /* level 2 = disrupted */
+        .line-level-2 { background-color: #b45309; color: #fff; }
+        /* level 3 = severe (paralisada / parcial) */
+        .line-level-3 { background-color: #991b1b; color: #fff; }
+        /* level 4 = unknown / no data */
+        .line-level-4 { background-color: #0369a1; color: #fff; }
+        .line-company {
+            font-size: .75rem;
+            opacity: .75;
+        }
+        .line-updated {
+            font-size: .72rem;
+            opacity: .6;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-dark bg-dark shadow-sm">
+    <div class="container">
+        <a class="navbar-brand d-flex align-items-center gap-2" href="/">
+            <span class="fw-bold fs-5">Trilhos SP</span>
+            <span class="text-secondary fw-normal fs-6">Status das Linhas</span>
+        </a>
+        <a href="https://github.com/rumd3x/trilhos-sp"
+           target="_blank" rel="noopener noreferrer"
+           class="btn btn-sm btn-outline-light d-flex align-items-center gap-1">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38
+                         0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13
+                         -.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66
+                         .07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15
+                         -.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27
+                         .68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12
+                         .51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48
+                         0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+            </svg>
+            GitHub
+        </a>
+    </div>
+</nav>
+
+<main class="container py-4">
+    <div class="row g-3">
+        <div class="col-6 col-md-4 col-xl-3" th:each="line : ${lines}">
+            <div class="line-card" th:classappend="${line.levelCss}">
+                <div class="fw-bold lh-sm" th:text="${line.name}"></div>
+                <div class="mt-1" th:text="${line.situation}"></div>
+                <div class="line-company mt-2" th:text="'Administrada por: ' + ${line.companyName}"></div>
+                <div class="line-updated mt-1"
+                     th:if="${!#strings.isEmpty(line.updatedAt)}"
+                     th:text="'Atualizado: ' + ${line.updatedAt}"></div>
+            </div>
+        </div>
+        <div class="col-12 text-muted small" th:if="${#lists.isEmpty(lines)}">
+            Nenhum status de linha disponível. Aguardando sincronização com a ARTESP.
+        </div>
+    </div>
+</main>
+
+<footer class="bg-dark text-secondary py-3 mt-auto">
+    <div class="container d-flex flex-column flex-sm-row justify-content-between align-items-center gap-2 small">
+        <span>&copy; <span th:text="${#temporals.format(#temporals.createNow(), 'yyyy')}">2026</span> Trilhos SP. Dados fornecidos pela <abbr title="Agência de Transporte do Estado de São Paulo">ARTESP</abbr>.</span>
+        <a href="https://github.com/rumd3x/trilhos-sp" target="_blank" rel="noopener noreferrer"
+           class="text-secondary text-decoration-none">Código aberto no GitHub</a>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

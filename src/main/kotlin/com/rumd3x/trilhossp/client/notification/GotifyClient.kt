@@ -23,23 +23,35 @@ class GotifyClient(
             .build()
     }
 
-    override fun isConfigured(): Boolean = props.isConfigured().also { configured ->
-        if (!configured) log.warn("GotifyClient not configured: set GOTIFY_URL and GOTIFY_TOKEN")
-    }
+    override fun isConfigured(): Boolean =
+        props.isConfigured().also { configured ->
+            if (!configured) log.warn("GotifyClient not configured: set GOTIFY_URL and GOTIFY_TOKEN")
+        }
 
-    override fun send(line: Line, diff: LineStatusDiff): Mono<Void> =
-        httpClient.post()
+    override fun send(
+        line: Line,
+        diff: LineStatusDiff,
+    ): Mono<Void> =
+        httpClient
+            .post()
             .uri("/message")
             .bodyValue(
                 mapOf(
                     "title" to "Linha ${line.code} – ${line.name}",
                     "message" to "${diff.oldStatus.situation} → ${diff.newStatus.situation}",
                     "priority" to diff.level,
-                )
-            )
-            .retrieve()
+                ),
+            ).retrieve()
             .toBodilessEntity()
-            .doOnSuccess { log.info("Gotify notification sent for line {} [{}]: '{}' -> '{}' (level {})", line.code, line.name, diff.oldStatus.situation, diff.newStatus.situation, diff.level) }
-            .doOnError { log.error("Failed to send Gotify notification for line {}: {}", line.code, it.message) }
+            .doOnSuccess {
+                log.info(
+                    "Gotify notification sent for line {} [{}]: '{}' -> '{}' (level {})",
+                    line.code,
+                    line.name,
+                    diff.oldStatus.situation,
+                    diff.newStatus.situation,
+                    diff.level,
+                )
+            }.doOnError { log.error("Failed to send Gotify notification for line {}: {}", line.code, it.message) }
             .then()
 }

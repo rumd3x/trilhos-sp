@@ -9,6 +9,5 @@ data class TransitApiProperties(
 ) {
     private val tokenPrefix = "cci_metro_status_live_"
 
-    fun normalizedKey(): String =
-        if (key.startsWith(tokenPrefix)) key else "$tokenPrefix$key"
+    fun normalizedKey(): String = if (key.startsWith(tokenPrefix)) key else "$tokenPrefix$key"
 }

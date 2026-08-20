@@ -18,13 +18,19 @@ class NotificationService(
     private val log = LoggerFactory.getLogger(javaClass)
 
     // null means "all" — parsed once at startup for efficient lookup
-    private val allowedDays: Set<Int>? = notifyProps.days
-        .takeUnless { it == "all" }
-        ?.split(",")?.map { it.trim().toInt() }?.toSet()
+    private val allowedDays: Set<Int>? =
+        notifyProps.days
+            .takeUnless { it == "all" }
+            ?.split(",")
+            ?.map { it.trim().toInt() }
+            ?.toSet()
 
-    private val allowedLines: Set<String>? = notifyProps.lines
-        .takeUnless { it == "all" }
-        ?.split(",")?.map { it.trim() }?.toSet()
+    private val allowedLines: Set<String>? =
+        notifyProps.lines
+            .takeUnless { it == "all" }
+            ?.split(",")
+            ?.map { it.trim() }
+            ?.toSet()
 
     private val notifyLevel = notifyProps.level
 
@@ -38,14 +44,21 @@ class NotificationService(
         senders = active
     }
 
-    fun notify(line: Line, diff: LineStatusDiff): Mono<Void> {
+    fun notify(
+        line: Line,
+        diff: LineStatusDiff,
+    ): Mono<Void> {
         if (!shouldNotify(line, diff)) return Mono.empty()
-        return Flux.fromIterable(senders)
+        return Flux
+            .fromIterable(senders)
             .flatMap { it.send(line, diff) }
             .then()
     }
 
-    private fun shouldNotify(line: Line, diff: LineStatusDiff): Boolean {
+    private fun shouldNotify(
+        line: Line,
+        diff: LineStatusDiff,
+    ): Boolean {
         val lineMatches = allowedLines == null || line.code in allowedLines
         if (!lineMatches) {
             log.info("Line {} skipped: not in allowed lines {}", line.code, allowedLines)

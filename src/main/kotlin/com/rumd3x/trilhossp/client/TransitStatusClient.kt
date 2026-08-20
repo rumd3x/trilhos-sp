@@ -14,16 +14,18 @@ class TransitStatusClient(
 ) {
     private val log = LoggerFactory.getLogger(javaClass)
 
-    private val webClient = webClientBuilder
-        .baseUrl(properties.baseUrl)
-        .defaultHeader("Authorization", "Api-Key ${properties.normalizedKey()}")
-        .build()
+    private val webClient =
+        webClientBuilder
+            .baseUrl(properties.baseUrl)
+            .defaultHeader("Authorization", "Api-Key ${properties.normalizedKey()}")
+            .build()
 
     fun fetchStatus(): Mono<TransitStatusResponse> =
-        webClient.get()
+        webClient
+            .get()
             .retrieve()
             .bodyToMono(TransitStatusResponse::class.java)
             .doOnSubscribe { log.info("Fetching transit status from API...") }
-            .doOnSuccess { log.info("API response received: {} companies, {} total lines", it.empresas.size, it.meta.totalLinhas) }
+            .doOnSuccess { log.info("API response received: {} companies, {} total lines", it?.empresas?.size, it?.meta?.totalLinhas) }
             .doOnError { log.error("API fetch failed: {}", it.message) }
 }

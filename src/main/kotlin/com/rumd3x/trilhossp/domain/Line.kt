@@ -13,17 +13,19 @@ data class Line(
     constructor(entity: LineEntity) : this(
         name = entity.name,
         code = entity.code,
-        status = LineStatus(
-            situation = entity.situation,
-            classification = entity.classification,
-            isNormal = entity.isNormal,
-            updatedAt = entity.updatedAt,
-        ),
-        company = Company(
-            id = entity.companyId,
-            name = entity.companyName,
-            isArtespMonitored = entity.isArtespMonitored,
-        ),
+        status =
+            LineStatus(
+                situation = entity.situation,
+                classification = entity.classification,
+                isNormal = entity.isNormal,
+                updatedAt = entity.updatedAt,
+            ),
+        company =
+            Company(
+                id = entity.companyId,
+                name = entity.companyName,
+                isArtespMonitored = entity.isArtespMonitored,
+            ),
         stations = emptyList(),
     )
 }

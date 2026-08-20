@@ -11,5 +11,5 @@ import org.springframework.scheduling.annotation.EnableScheduling
 class TrilhosspApplication
 
 fun main(args: Array<String>) {
-	runApplication<TrilhosspApplication>(*args)
+    runApplication<TrilhosspApplication>(*args)
 }

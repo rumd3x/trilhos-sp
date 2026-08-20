@@ -1,20 +1,23 @@
 package com.rumd3x.trilhossp.model
 
-import tools.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonProperty
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class TransitStatusResponse(
     val meta: TransitMeta,
     val empresas: List<Empresa>,
 )
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class TransitMeta(
     val versao: String,
     val timestamp: String,
-    @JsonProperty("filtros_aplicados") val filtrosAplicados: Map<String, Any>?,
     @JsonProperty("total_linhas") val totalLinhas: Int,
     @JsonProperty("total_empresas") val totalEmpresas: Int,
 )
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class Empresa(
     val id: Int,
     val nome: String,
@@ -22,14 +25,16 @@ data class Empresa(
     val linhas: List<Linha>,
 )
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class Linha(
     val nome: String,
     val codigo: String,
     val ativa: Boolean,
     val status: LinhaStatus,
-    val estacoes: Estacoes,
+    val estacoes: Estacoes? = null,
 )
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class LinhaStatus(
     val situacao: String,
     val classificacao: String,
@@ -38,7 +43,8 @@ data class LinhaStatus(
     @JsonProperty("atualizado_ha") val atualizadoHa: String,
 )
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class Estacoes(
-    val total: Int,
-    val nomes: List<String>,
+    val total: Int? = 0,
+    val nomes: List<String>? = emptyList(),
 )

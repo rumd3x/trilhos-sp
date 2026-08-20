@@ -5,13 +5,14 @@ data class LineStatusDiff(
     val newStatus: LineStatus,
 ) {
     val level: Int
-        get() = when {
-            isPositive()  -> 1
-            isReallyBad() -> 3
-            isNeutral()   -> 0
-            isNegative()  -> 2
-            else          -> 4
-        }
+        get() =
+            when {
+                isPositive() -> 1
+                isReallyBad() -> 3
+                isNeutral() -> 0
+                isNegative() -> 2
+                else -> 4
+            }
 
     fun isNeutral(): Boolean {
         val startedNow = oldStatus.situation.lowercase().contains("encerrada")
@@ -20,8 +21,7 @@ data class LineStatusDiff(
         return (startedNow && isCurrentlyNormal) || finishedNow
     }
 
-    fun isPositive(): Boolean =
-        newStatus.situation.lowercase().contains("normal") && !isNeutral()
+    fun isPositive(): Boolean = newStatus.situation.lowercase().contains("normal") && !isNeutral()
 
     fun isNegative(): Boolean = !isPositive() && !isNeutral() && !isUnknown()
 
@@ -33,6 +33,5 @@ data class LineStatusDiff(
     }
 
     // case-sensitive to match the original behaviour
-    private fun isUnknown(): Boolean =
-        newStatus.situation.contains("Dados Indisponíveis")
+    private fun isUnknown(): Boolean = newStatus.situation.contains("Dados Indisponíveis")
 }

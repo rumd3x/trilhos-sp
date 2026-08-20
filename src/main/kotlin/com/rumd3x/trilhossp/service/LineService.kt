@@ -18,7 +18,8 @@ class LineService(
     @Transactional
     fun replaceAll(lines: List<Line>): Mono<Void> {
         log.info("Persisting {} lines to database...", lines.size)
-        return repository.deleteAll()
+        return repository
+            .deleteAll()
             .doOnSuccess { log.debug("Cleared existing lines") }
             .thenMany(repository.saveAll(lines.map { mapper.toEntity(it) }))
             .doOnComplete { log.info("All {} lines saved successfully", lines.size) }

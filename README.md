@@ -1,8 +1,16 @@
-# trilhos-sp
+# Trilhos SP
 
 Notificações em tempo real sobre mudanças de status nas linhas dos trens e metrôs de São Paulo, entregues via [Gotify](https://gotify.net/).
 
 Sucessor do [cptm-alerts](https://github.com/rumd3x/cptm-alerts) — projeto PHP que enviava notificações via Slack. A antiga fonte de dados ([diretodostrens.com.br](https://www.diretodostrens.com.br/)) foi encerrada e a obtenção de novas chaves se tornou impossível. Este projeto foi reescrito em Kotlin/Spring com a nova API oficial da ARTESP e troca o Slack pelo Gotify.
+
+---
+
+## Dashboard
+
+A aplicação expõe uma dashboard em `http://localhost:8080/` com o status atual de todas as linhas monitoradas, codificado por cor de acordo com a severidade.
+
+![Dashboard](docs/dashboard.png)
 
 ---
 

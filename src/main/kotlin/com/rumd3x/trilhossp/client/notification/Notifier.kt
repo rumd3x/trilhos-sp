@@ -6,5 +6,9 @@ import reactor.core.publisher.Mono
 
 interface Notifier {
     fun isConfigured(): Boolean
-    fun send(line: Line, diff: LineStatusDiff): Mono<Void>
+
+    fun send(
+        line: Line,
+        diff: LineStatusDiff,
+    ): Mono<Void>
 }
