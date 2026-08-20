@@ -8,7 +8,11 @@ Sucessor do [cptm-alerts](https://github.com/rumd3x/cptm-alerts) — projeto PHP
 
 ## Dashboard
 
-A aplicação expõe uma dashboard em `http://localhost:8080/` com o status atual de todas as linhas monitoradas, codificado por cor de acordo com a severidade.
+A aplicação expõe uma dashboard com o status atual de todas as linhas monitoradas, codificado por cor de acordo com a severidade.
+
+**Demo pública:** [https://trilhossp.edmurcardoso.com.br/](https://trilhossp.edmurcardoso.com.br/)
+
+Ao rodar localmente, acessível em `http://localhost:8080/`.
 
 ![Dashboard](docs/dashboard.png)
 
