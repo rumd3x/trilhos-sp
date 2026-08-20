@@ -1,10 +1,19 @@
 FROM eclipse-temurin:25-jdk AS build
 WORKDIR /app
 
-# Copy dependency descriptors first for layer caching
 COPY gradlew .
 COPY gradle/ gradle/
 COPY build.gradle settings.gradle ./
+
+# Bootstrap gradle-wrapper.jar from the version declared in gradle-wrapper.properties
+RUN apt-get update && apt-get install -y --no-install-recommends wget unzip \
+    && GRADLE_VERSION=$(sed -n 's|.*distributions/gradle-\([^-]*\)-bin\.zip.*|\1|p' gradle/wrapper/gradle-wrapper.properties) \
+    && wget -q "https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip" -O /tmp/gradle.zip \
+    && unzip -q /tmp/gradle.zip -d /tmp/gradle-dist \
+    && /tmp/gradle-dist/gradle-${GRADLE_VERSION}/bin/gradle wrapper \
+    && rm -rf /tmp/gradle.zip /tmp/gradle-dist \
+    && apt-get purge -y wget unzip && rm -rf /var/lib/apt/lists/*
+
 RUN chmod +x gradlew && ./gradlew dependencies --no-daemon
 
 COPY src/ src/
