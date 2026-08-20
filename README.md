@@ -28,7 +28,7 @@ O acesso à API requer autenticação desde 25/06/2026.
 
 A chave pode ser fornecida com ou sem o prefixo `cci_metro_status_live_` — a aplicação normaliza automaticamente.
 
-> **Rate limit:** a API permite até 12 requisições por hora. O intervalo de polling padrão é de 5 minutos (12 req/hora), alinhado exatamente ao limite.
+> **Rate limit:** a API permite até 12 requisições por hora. O intervalo de polling padrão é de 10 minutos (6 req/hora), alinhado exatamente à metade do limite.
 
 ---
 
