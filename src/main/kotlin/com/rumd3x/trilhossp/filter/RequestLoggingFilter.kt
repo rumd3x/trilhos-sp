@@ -14,9 +14,11 @@ class RequestLoggingFilter : WebFilter {
 
     override fun filter(exchange: ServerWebExchange, chain: WebFilterChain): Mono<Void> {
         val request = exchange.request
-        val ip = resolveClientIp(request)
-        val method = request.method
         val uri = request.uri.path
+
+        if (uri.startsWith("/actuator/")) return chain.filter(exchange)
+
+        val ip = resolveClientIp(request)
         val start = System.currentTimeMillis()
 
         return chain.filter(exchange).doFinally {
