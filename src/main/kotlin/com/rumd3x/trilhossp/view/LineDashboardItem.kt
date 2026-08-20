@@ -16,13 +16,14 @@ data class LineDashboardItem(
     companion object {
         private val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")
 
-        fun from(entity: LineEntity) = LineDashboardItem(
-            name = entity.name,
-            situation = entity.situation,
-            companyName = entity.companyName,
-            levelCss = levelCssFor(entity),
-            updatedAt = formatDate(entity.updatedAt),
-        )
+        fun from(entity: LineEntity) =
+            LineDashboardItem(
+                name = entity.name,
+                situation = entity.situation,
+                companyName = entity.companyName,
+                levelCss = levelCssFor(entity),
+                updatedAt = formatDate(entity.updatedAt),
+            )
 
         private fun levelCssFor(entity: LineEntity): String {
             val status = LineStatus(entity.situation, entity.classification, entity.isNormal, entity.updatedAt)

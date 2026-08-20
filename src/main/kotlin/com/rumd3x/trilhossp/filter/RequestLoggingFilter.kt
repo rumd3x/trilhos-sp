@@ -12,9 +12,13 @@ import reactor.core.publisher.Mono
 class RequestLoggingFilter : WebFilter {
     private val log = LoggerFactory.getLogger(javaClass)
 
-    override fun filter(exchange: ServerWebExchange, chain: WebFilterChain): Mono<Void> {
+    override fun filter(
+        exchange: ServerWebExchange,
+        chain: WebFilterChain,
+    ): Mono<Void> {
         val request = exchange.request
         val uri = request.uri.path
+        val method = request.method
 
         if (uri.startsWith("/actuator/")) return chain.filter(exchange)
 
@@ -30,10 +34,12 @@ class RequestLoggingFilter : WebFilter {
 
     private fun resolveClientIp(request: ServerHttpRequest): String {
         // X-Forwarded-For may contain a comma-separated chain; first entry is the original client
-        request.headers.getFirst("X-Forwarded-For")
+        request.headers
+            .getFirst("X-Forwarded-For")
             ?.takeIf { it.isNotBlank() }
             ?.let { return it.split(",").first().trim() }
-        request.headers.getFirst("X-Real-IP")
+        request.headers
+            .getFirst("X-Real-IP")
             ?.takeIf { it.isNotBlank() }
             ?.let { return it.trim() }
         return request.remoteAddress?.address?.hostAddress ?: "unknown"
