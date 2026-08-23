@@ -12,6 +12,7 @@ data class LineEntity(
     val companyName: String,
     val isArtespMonitored: Boolean,
     val situation: String,
+    val descricao: String,
     val classification: String,
     val isNormal: Boolean,
     val updatedAt: String,

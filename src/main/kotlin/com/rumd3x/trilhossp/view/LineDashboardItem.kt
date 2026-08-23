@@ -9,6 +9,7 @@ import java.time.format.DateTimeFormatter
 data class LineDashboardItem(
     val name: String,
     val situation: String,
+    val descricao: String,
     val companyName: String,
     val levelCss: String,
     val updatedAt: String,
@@ -20,13 +21,14 @@ data class LineDashboardItem(
             LineDashboardItem(
                 name = entity.name,
                 situation = entity.situation,
+                descricao = entity.descricao,
                 companyName = entity.companyName,
                 levelCss = levelCssFor(entity),
                 updatedAt = formatDate(entity.updatedAt),
             )
 
         private fun levelCssFor(entity: LineEntity): String {
-            val status = LineStatus(entity.situation, entity.classification, entity.isNormal, entity.updatedAt)
+            val status = LineStatus(entity.situation, entity.classification, entity.descricao, entity.isNormal, entity.updatedAt)
             return "line-level-${LineStatusDiff(status, status).level}"
         }
 

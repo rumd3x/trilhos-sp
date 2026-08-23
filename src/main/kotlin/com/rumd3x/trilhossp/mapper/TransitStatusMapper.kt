@@ -21,6 +21,7 @@ class TransitStatusMapper {
                         LineStatus(
                             situation = linha.status.situacao,
                             classification = linha.status.classificacao,
+                            descricao = linha.status.descricao ?: "",
                             isNormal = linha.status.operacaoNormal,
                             updatedAt = linha.status.atualizadoEm,
                         ),

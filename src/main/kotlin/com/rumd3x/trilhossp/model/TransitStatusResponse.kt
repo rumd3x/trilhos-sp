@@ -38,6 +38,7 @@ data class Linha(
 data class LinhaStatus(
     val situacao: String,
     val classificacao: String,
+    val descricao: String? = "",
     @JsonProperty("operacao_normal") val operacaoNormal: Boolean,
     @JsonProperty("atualizado_em") val atualizadoEm: String,
     @JsonProperty("atualizado_ha") val atualizadoHa: String,

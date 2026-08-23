@@ -15,6 +15,7 @@ class LineEntityMapper {
             isArtespMonitored = line.company.isArtespMonitored,
             situation = line.status.situation,
             classification = line.status.classification,
+            descricao = line.status.descricao,
             isNormal = line.status.isNormal,
             updatedAt = line.status.updatedAt,
         )

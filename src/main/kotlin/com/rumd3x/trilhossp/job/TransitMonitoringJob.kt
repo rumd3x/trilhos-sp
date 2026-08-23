@@ -21,7 +21,7 @@ class TransitMonitoringJob(
     private val log = LoggerFactory.getLogger(javaClass)
     private val previousLines = AtomicReference<List<Line>>(emptyList())
 
-    @Scheduled(cron = "0 */10 * * * *")
+    @Scheduled(cron = "0 8 * * * *")
     fun pollTransitStatus() {
         log.info("--- Poll started ---")
         client
@@ -38,15 +38,15 @@ class TransitMonitoringJob(
             }.doOnNext { (newLines, diffs) ->
                 previousLines.set(newLines)
                 val pairs = newLines.zip(diffs)
-                val changed = pairs.filter { (_, diff) -> diff.oldStatus != diff.newStatus }
+                val changed = pairs.filter { (_, diff) -> diff.hasChange() }
                 log.info("Status comparison: {}/{} lines changed", changed.size, newLines.size)
                 changed.forEach { (line, diff) ->
                     log.info(
                         "  Line {} [{}]: '{}' -> '{}' (level {})",
                         line.code,
                         line.name,
-                        diff.oldStatus.situation,
-                        diff.newStatus.situation,
+                        diff.oldStatus.situation + if (diff.oldStatus.descricao.isNotEmpty()) " - ${diff.oldStatus.descricao}" else "",
+                        diff.newStatus.situation + if (diff.newStatus.descricao.isNotEmpty()) " - ${diff.newStatus.descricao}" else "",
                         diff.level,
                     )
                 }

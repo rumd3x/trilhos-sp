@@ -56,7 +56,7 @@ class TransitMonitoringJobTest {
     ) = Line(
         code = code,
         name = "Linha $code",
-        status = LineStatus(situation, "", situation.contains("Normal"), ""),
+        status = LineStatus(situation, "", "", situation.contains("Normal"), ""),
         company = Company(1, "Test", true),
         stations = emptyList(),
     )

@@ -33,6 +33,7 @@ class TransitStatusMapperTest {
         classificacao: String = "operacional",
         operacaoNormal: Boolean = true,
         estacoes: List<String> = listOf("Luz", "República"),
+        descricao: String = "",
     ) = Linha(
         nome = nome,
         codigo = codigo,
@@ -41,6 +42,7 @@ class TransitStatusMapperTest {
             LinhaStatus(
                 situacao = situacao,
                 classificacao = classificacao,
+                descricao = descricao,
                 operacaoNormal = operacaoNormal,
                 atualizadoEm = "2024-01-01T10:00:00-03:00",
                 atualizadoHa = "5 minutos",
@@ -109,7 +111,7 @@ class TransitStatusMapperTest {
                 nome = "Linha 4-Amarela",
                 codigo = "4",
                 ativa = true,
-                status = LinhaStatus("Operação Normal", "operacional", true, "", ""),
+                status = LinhaStatus("Operação Normal", "operacional", "", true, "", ""),
                 estacoes = null,
             )
         val lines = mapper.toLines(response(empresa(linhas = listOf(linhaWithoutStations))))
@@ -122,7 +124,7 @@ class TransitStatusMapperTest {
                 nome = "Linha 4-Amarela",
                 codigo = "4",
                 ativa = true,
-                status = LinhaStatus("Operação Normal", "operacional", true, "", ""),
+                status = LinhaStatus("Operação Normal", "operacional", "", true, "", ""),
                 estacoes = Estacoes(total = 2, nomes = null),
             )
         val lines = mapper.toLines(response(empresa(linhas = listOf(linhaWithNullNomes))))

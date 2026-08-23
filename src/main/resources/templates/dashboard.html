@@ -39,6 +39,10 @@
             font-size: .72rem;
             opacity: .6;
         }
+        .line-descricao {
+            font-size: .80rem;
+            opacity: .80;
+        }
     </style>
 </head>
 <body>
@@ -73,6 +77,7 @@
             <div class="line-card" th:classappend="${line.levelCss}">
                 <div class="fw-bold lh-sm" th:text="${line.name}"></div>
                 <div class="mt-1" th:text="${line.situation}"></div>
+                <div class="line-descricao mt-1" th:if="${!#strings.isEmpty(line.descricao)}" th:text="${line.descricao}"></div>
                 <div class="line-company mt-2" th:text="'Administrada por: ' + ${line.companyName}"></div>
                 <div class="line-updated mt-1"
                      th:if="${!#strings.isEmpty(line.updatedAt)}"

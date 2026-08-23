@@ -41,7 +41,7 @@ class NotificationServiceTest {
         Line(
             code = "4",
             name = "Linha 4-Amarela",
-            status = LineStatus("Operação Normal", "operacional", true, ""),
+            status = LineStatus("Operação Normal", "operacional", "", true, ""),
             company = Company(1, "ViaQuatro", true),
             stations = emptyList(),
         )
@@ -50,7 +50,7 @@ class NotificationServiceTest {
         old: String,
         new: String,
     ): LineStatusDiff {
-        val s = { sit: String -> LineStatus(sit, "", true, "") }
+        val s = { sit: String -> LineStatus(sit, "", "", true, "") }
         return LineStatusDiff(s(old), s(new))
     }
 

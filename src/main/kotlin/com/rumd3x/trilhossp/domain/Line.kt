@@ -17,6 +17,7 @@ data class Line(
             LineStatus(
                 situation = entity.situation,
                 classification = entity.classification,
+                descricao = entity.descricao,
                 isNormal = entity.isNormal,
                 updatedAt = entity.updatedAt,
             ),

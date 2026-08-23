@@ -37,8 +37,10 @@ class GotifyClient(
             .uri("/message")
             .bodyValue(
                 mapOf(
-                    "title" to "Linha ${line.code} – ${line.name}",
-                    "message" to "${diff.oldStatus.situation} → ${diff.newStatus.situation}",
+                    "title" to "Alteração na operação da ${line.name}",
+                    "message" to
+                        "Estava em ${diff.oldStatus.situation} e agora está com ${diff.newStatus.situation}" +
+                        if (diff.newStatus.descricao.isNotEmpty()) ": ${diff.newStatus.descricao}" else "",
                     "priority" to diff.level,
                 ),
             ).retrieve()

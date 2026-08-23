@@ -10,6 +10,7 @@ class LineStatusDiffTest {
         LineStatus(
             situation = situation,
             classification = "",
+            descricao = "",
             isNormal = true,
             updatedAt = "",
         )
