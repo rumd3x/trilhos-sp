@@ -21,7 +21,7 @@ class TransitMonitoringJob(
     private val log = LoggerFactory.getLogger(javaClass)
     private val previousLines = AtomicReference<List<Line>>(emptyList())
 
-    @Scheduled(cron = "0 8 * * * *")
+    @Scheduled(cron = "0 */10 * * * *")
     fun pollTransitStatus() {
         log.info("--- Poll started ---")
         client
