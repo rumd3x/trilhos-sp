@@ -3,8 +3,8 @@ package com.rumd3x.trilhossp.config
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class TransitApiPropertiesTest {
-    private fun props(key: String) = TransitApiProperties(baseUrl = "https://example.com", key = key)
+class ArtespApiPropertiesTest {
+    private fun props(key: String) = ArtespApiProperties(baseUrl = "https://example.com", key = key)
 
     @Test fun `normalizedKey returns key as-is when prefix already present`() =
         assertEquals("cci_metro_status_live_abc123", props("cci_metro_status_live_abc123").normalizedKey())

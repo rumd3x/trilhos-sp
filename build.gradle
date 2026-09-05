@@ -30,6 +30,7 @@ dependencies {
 	implementation 'org.jetbrains.kotlin:kotlin-reflect'
 	implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-reactor'
 	implementation 'tools.jackson.module:jackson-module-kotlin'
+	implementation 'org.jsoup:jsoup:1.18.1'
 	runtimeOnly 'com.h2database:h2'
 	runtimeOnly 'io.r2dbc:r2dbc-h2'
 	testImplementation 'org.springframework.boot:spring-boot-starter-data-r2dbc-test'

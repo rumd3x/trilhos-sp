@@ -1,5 +1,6 @@
 package com.rumd3x.trilhossp.view
 
+import com.rumd3x.trilhossp.client.provider.ProviderDisplayName
 import com.rumd3x.trilhossp.domain.LineStatus
 import com.rumd3x.trilhossp.domain.LineStatusDiff
 import com.rumd3x.trilhossp.entity.LineEntity
@@ -11,6 +12,7 @@ data class LineDashboardItem(
     val situation: String,
     val descricao: String,
     val companyName: String,
+    val source: String,
     val levelCss: String,
     val updatedAt: String,
 ) {
@@ -23,6 +25,11 @@ data class LineDashboardItem(
                 situation = entity.situation,
                 descricao = entity.descricao,
                 companyName = entity.companyName,
+                source =
+                    entity.source
+                        .takeIf { it.isNotBlank() }
+                        ?.let { ProviderDisplayName.labelFor(it) }
+                        .orEmpty(),
                 levelCss = levelCssFor(entity),
                 updatedAt = formatDate(entity.updatedAt),
             )

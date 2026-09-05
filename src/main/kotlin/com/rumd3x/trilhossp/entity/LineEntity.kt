@@ -16,4 +16,5 @@ data class LineEntity(
     val classification: String,
     val isNormal: Boolean,
     val updatedAt: String,
+    val source: String,
 )

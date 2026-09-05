@@ -1,16 +1,16 @@
-package com.rumd3x.trilhossp.model
+package com.rumd3x.trilhossp.client.provider.artesp
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class TransitStatusResponse(
-    val meta: TransitMeta,
+data class ArtespStatusResponse(
+    val meta: ArtespMeta,
     val empresas: List<Empresa>,
 )
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class TransitMeta(
+data class ArtespMeta(
     val versao: String,
     val timestamp: String,
     @JsonProperty("total_linhas") val totalLinhas: Int,

@@ -78,7 +78,8 @@
                 <div class="fw-bold lh-sm" th:text="${line.name}"></div>
                 <div class="mt-1" th:text="${line.situation}"></div>
                 <div class="line-descricao mt-1" th:if="${!#strings.isEmpty(line.descricao)}" th:text="${line.descricao}"></div>
-                <div class="line-company mt-2" th:text="'Administrada por: ' + ${line.companyName}"></div>
+                <div class="line-company mt-2" th:if="${!#strings.isEmpty(line.companyName)}" th:text="'Administrada por: ' + ${line.companyName}"></div>
+                <div class="line-company mt-2" th:if="${!#strings.isEmpty(line.source)}" th:text="'Fonte dos dados: ' + ${line.source}"></div>
                 <div class="line-updated mt-1"
                      th:if="${!#strings.isEmpty(line.updatedAt)}"
                      th:text="'Atualizado: ' + ${line.updatedAt}"></div>
@@ -92,7 +93,7 @@
 
 <footer class="bg-dark text-secondary py-3 mt-auto">
     <div class="container d-flex flex-column flex-sm-row justify-content-between align-items-center gap-2 small">
-        <span>&copy; <span th:text="${#temporals.format(#temporals.createNow(), 'yyyy')}">2026</span> Trilhos SP. Dados fornecidos pela <abbr title="Agência de Transporte do Estado de São Paulo">ARTESP</abbr>.</span>
+        <span>&copy; <span th:text="${#temporals.format(#temporals.createNow(), 'yyyy')}">2026</span> Trilhos SP. Dados fornecidos pela <abbr title="Agência de Transporte do Estado de São Paulo">ARTESP</abbr>, <a href="https://www.cptm.sp.gov.br/" target="_blank" rel="noopener noreferrer" class="text-secondary">CPTM</a> e <a href="https://www.metro.sp.gov.br/" target="_blank" rel="noopener noreferrer" class="text-secondary">Metrô</a>.</span>
         <a href="https://github.com/rumd3x/trilhos-sp" target="_blank" rel="noopener noreferrer"
            class="text-secondary text-decoration-none">Código aberto no GitHub</a>
     </div>

@@ -9,5 +9,6 @@ CREATE TABLE IF NOT EXISTS lines (
     descricao        TEXT         NOT NULL,
     classification   VARCHAR(50)  NOT NULL,
     is_normal        BOOLEAN      NOT NULL,
-    updated_at       VARCHAR(50)  NOT NULL
+    updated_at       VARCHAR(50)  NOT NULL,
+    source           VARCHAR(50)  NOT NULL DEFAULT ''
 );

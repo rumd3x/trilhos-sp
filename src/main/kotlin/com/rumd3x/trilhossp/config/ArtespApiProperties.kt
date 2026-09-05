@@ -2,8 +2,8 @@ package com.rumd3x.trilhossp.config
 
 import org.springframework.boot.context.properties.ConfigurationProperties
 
-@ConfigurationProperties(prefix = "transit.api")
-data class TransitApiProperties(
+@ConfigurationProperties(prefix = "artesp.api")
+data class ArtespApiProperties(
     val baseUrl: String,
     val key: String,
 ) {

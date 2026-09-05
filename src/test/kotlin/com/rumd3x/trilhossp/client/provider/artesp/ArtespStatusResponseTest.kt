@@ -1,4 +1,4 @@
-package com.rumd3x.trilhossp.model
+package com.rumd3x.trilhossp.client.provider.artesp
 
 import tools.jackson.module.kotlin.jacksonObjectMapper
 import tools.jackson.module.kotlin.readValue
@@ -6,7 +6,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
-class TransitStatusResponseTest {
+class ArtespStatusResponseTest {
     private val mapper = jacksonObjectMapper()
 
     private fun json(filtrosAplicados: String? = null): String {
@@ -26,22 +26,22 @@ class TransitStatusResponseTest {
     }
 
     @Test fun `deserializes when filtros_aplicados is null`() {
-        val result = mapper.readValue<TransitStatusResponse>(json("null"))
+        val result = mapper.readValue<ArtespStatusResponse>(json("null"))
         assertEquals(2, result.meta.totalLinhas)
     }
 
     @Test fun `deserializes when filtros_aplicados is absent`() {
-        val result = mapper.readValue<TransitStatusResponse>(json())
+        val result = mapper.readValue<ArtespStatusResponse>(json())
         assertNotNull(result.meta)
     }
 
     @Test fun `deserializes when filtros_aplicados is an empty object`() {
-        val result = mapper.readValue<TransitStatusResponse>(json("{}"))
+        val result = mapper.readValue<ArtespStatusResponse>(json("{}"))
         assertEquals(1, result.meta.totalEmpresas)
     }
 
     @Test fun `deserializes when filtros_aplicados is a populated object`() {
-        val result = mapper.readValue<TransitStatusResponse>(json("""{"linha": "4", "data": "2024-01-01"}"""))
+        val result = mapper.readValue<ArtespStatusResponse>(json("""{"linha": "4", "data": "2024-01-01"}"""))
         assertEquals("1.0", result.meta.versao)
     }
 
@@ -61,7 +61,7 @@ class TransitStatusResponseTest {
                 "unknown_root_field": true
             }
             """.trimIndent()
-        val result = mapper.readValue<TransitStatusResponse>(fullJson)
+        val result = mapper.readValue<ArtespStatusResponse>(fullJson)
         assertNotNull(result)
     }
 
@@ -84,7 +84,7 @@ class TransitStatusResponseTest {
         """.trimIndent()
 
     @Test fun `deserializes linha when estacoes is absent`() {
-        val result = mapper.readValue<TransitStatusResponse>(linhaJson(null))
+        val result = mapper.readValue<ArtespStatusResponse>(linhaJson(null))
         assertNotNull(
             result.empresas
                 .first()
@@ -94,7 +94,7 @@ class TransitStatusResponseTest {
     }
 
     @Test fun `deserializes linha when estacoes is null`() {
-        val result = mapper.readValue<TransitStatusResponse>(linhaJson("null"))
+        val result = mapper.readValue<ArtespStatusResponse>(linhaJson("null"))
         assertNotNull(
             result.empresas
                 .first()
@@ -104,7 +104,7 @@ class TransitStatusResponseTest {
     }
 
     @Test fun `deserializes linha with estacoes present`() {
-        val result = mapper.readValue<TransitStatusResponse>(linhaJson("""{"total": 2, "nomes": ["Luz", "República"]}"""))
+        val result = mapper.readValue<ArtespStatusResponse>(linhaJson("""{"total": 2, "nomes": ["Luz", "República"]}"""))
         assertEquals(
             2,
             result.empresas
@@ -117,7 +117,7 @@ class TransitStatusResponseTest {
     }
 
     @Test fun `deserializes estacoes when nomes is null`() {
-        val result = mapper.readValue<TransitStatusResponse>(linhaJson("""{"total": 2, "nomes": null}"""))
+        val result = mapper.readValue<ArtespStatusResponse>(linhaJson("""{"total": 2, "nomes": null}"""))
         assertNotNull(
             result.empresas
                 .first()
@@ -128,7 +128,7 @@ class TransitStatusResponseTest {
     }
 
     @Test fun `deserializes estacoes when nomes is absent`() {
-        val result = mapper.readValue<TransitStatusResponse>(linhaJson("""{"total": 2}"""))
+        val result = mapper.readValue<ArtespStatusResponse>(linhaJson("""{"total": 2}"""))
         assertNotNull(
             result.empresas
                 .first()
@@ -139,7 +139,7 @@ class TransitStatusResponseTest {
     }
 
     @Test fun `deserializes estacoes when total is null`() {
-        val result = mapper.readValue<TransitStatusResponse>(linhaJson("""{"total": null, "nomes": []}"""))
+        val result = mapper.readValue<ArtespStatusResponse>(linhaJson("""{"total": null, "nomes": []}"""))
         assertNotNull(
             result.empresas
                 .first()
@@ -150,7 +150,7 @@ class TransitStatusResponseTest {
     }
 
     @Test fun `deserializes estacoes when both total and nomes are absent`() {
-        val result = mapper.readValue<TransitStatusResponse>(linhaJson("{}"))
+        val result = mapper.readValue<ArtespStatusResponse>(linhaJson("{}"))
         assertNotNull(
             result.empresas
                 .first()
@@ -162,7 +162,7 @@ class TransitStatusResponseTest {
 
     @Test fun `deserializes full mock api response`() {
         val json = javaClass.getResourceAsStream("/mock-api-response.json")!!.reader().readText()
-        val result = mapper.readValue<TransitStatusResponse>(json)
+        val result = mapper.readValue<ArtespStatusResponse>(json)
 
         assertEquals(7, result.empresas.size)
         assertEquals(13, result.meta.totalLinhas)

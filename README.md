@@ -18,6 +18,20 @@ Ao rodar localmente, acessível em `http://localhost:8080/`.
 
 ---
 
+## Fontes de dados
+
+O status das linhas é obtido de múltiplas fontes e mesclado automaticamente (quando mais de uma fonte reporta a mesma linha, os dados mais completos e recentes prevalecem):
+
+| Fonte | Cobertura | Autenticação |
+|---|---|---|
+| [API Trilhos (ARTESP)](https://ccm.artesp.sp.gov.br/metroferroviario/api/docs/) | Todas as linhas fiscalizadas pela ARTESP | API Key |
+| [CPTM](https://www.cptm.sp.gov.br/) | Linhas 10, 11, 12 e 13 | Nenhuma |
+| [Metrô de São Paulo](https://www.metro.sp.gov.br/) | Linhas 1, 2, 3, 4, 5, 15 e 17 | Nenhuma |
+
+> A `ARTESP_API_KEY` **não é mais obrigatória** para a aplicação rodar — sem ela, a fonte ARTESP simplesmente falha silenciosamente a cada ciclo e as demais fontes (CPTM, Metrô) continuam funcionando normalmente. Porém, sem essa chave você perde: as linhas exclusivas da ARTESP (7, 8 e 9, operadas por TIC Trens/ViaMobilidade), a lista de estações de cada linha, e o nome oficial das empresas operadoras nas linhas que as demais fontes também cobrem.
+
+---
+
 ## Obtendo uma API Key
 
 O acesso à API requer autenticação desde 25/06/2026.
@@ -36,7 +50,7 @@ A chave pode ser fornecida com ou sem o prefixo `cci_metro_status_live_` — a a
 
 ```bash
 docker run --detach \
-  --env TRANSIT_API_KEY=cci_metro_status_live_sua_chave \
+  --env ARTESP_API_KEY=cci_metro_status_live_sua_chave \
   --env GOTIFY_URL=https://gotify.example.com \
   --env GOTIFY_TOKEN=seu_app_token \
   --env NOTIFY_LEVEL=2 \
@@ -50,7 +64,7 @@ docker run --detach \
 
 | Variável | Obrigatória | Descrição |
 |---|---|---|
-| `TRANSIT_API_KEY` | ✅ | Chave da API ARTESP |
+| `ARTESP_API_KEY` | — | Chave da API ARTESP (veja [Obtendo uma API Key](#obtendo-uma-api-key)). Opcional — sem ela a fonte ARTESP fica indisponível, mas CPTM e Metrô continuam funcionando |
 | `GOTIFY_URL` | ✅ | URL base do servidor Gotify |
 | `GOTIFY_TOKEN` | ✅ | App token do Gotify |
 | `NOTIFY_LEVEL` | — | Nível mínimo para notificar (padrão: `4`) |

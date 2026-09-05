@@ -10,13 +10,14 @@ class LineEntityMapper {
         LineEntity(
             code = line.code,
             name = line.name,
-            companyId = line.company.id,
-            companyName = line.company.name,
-            isArtespMonitored = line.company.isArtespMonitored,
+            companyId = line.company?.id ?: 0,
+            companyName = line.company?.name ?: "",
+            isArtespMonitored = line.company?.isArtespMonitored ?: false,
             situation = line.status.situation,
             classification = line.status.classification,
             descricao = line.status.descricao,
             isNormal = line.status.isNormal,
             updatedAt = line.status.updatedAt,
+            source = line.source,
         )
 }

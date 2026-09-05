@@ -1,15 +1,17 @@
-package com.rumd3x.trilhossp.mapper
+package com.rumd3x.trilhossp.client.provider.artesp
 
+import com.rumd3x.trilhossp.client.provider.ProviderNames
 import com.rumd3x.trilhossp.domain.Company
 import com.rumd3x.trilhossp.domain.Line
 import com.rumd3x.trilhossp.domain.LineStatus
 import com.rumd3x.trilhossp.domain.Station
-import com.rumd3x.trilhossp.model.TransitStatusResponse
 import org.springframework.stereotype.Component
 
 @Component
-class TransitStatusMapper {
-    fun toLines(response: TransitStatusResponse): List<Line> =
+class ArtespStatusMapper {
+    private val name = ProviderNames.ARTESP
+
+    fun toLines(response: ArtespStatusResponse): List<Line> =
         response.empresas.flatMap { empresa ->
             val company = Company(id = empresa.id, name = empresa.nome, isArtespMonitored = empresa.fiscalizacaoArtesp)
             empresa.linhas.map { linha ->
@@ -26,6 +28,7 @@ class TransitStatusMapper {
                             updatedAt = linha.status.atualizadoEm,
                         ),
                     stations = linha.estacoes?.nomes?.map { Station(name = it) } ?: emptyList(),
+                    source = name,
                 )
             }
         }

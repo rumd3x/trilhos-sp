@@ -1,21 +1,15 @@
-package com.rumd3x.trilhossp.mapper
+package com.rumd3x.trilhossp.client.provider.artesp
 
-import com.rumd3x.trilhossp.model.Empresa
-import com.rumd3x.trilhossp.model.Estacoes
-import com.rumd3x.trilhossp.model.Linha
-import com.rumd3x.trilhossp.model.LinhaStatus
-import com.rumd3x.trilhossp.model.TransitMeta
-import com.rumd3x.trilhossp.model.TransitStatusResponse
 import tools.jackson.module.kotlin.jacksonObjectMapper
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class TransitStatusMapperTest {
-    private val mapper = TransitStatusMapper()
+class ArtespStatusMapperTest {
+    private val mapper = ArtespStatusMapper()
 
     private fun response(vararg empresas: Empresa) =
-        TransitStatusResponse(
-            meta = TransitMeta(versao = "1.0.0", timestamp = "", totalLinhas = 1, totalEmpresas = 1),
+        ArtespStatusResponse(
+            meta = ArtespMeta(versao = "1.0.0", timestamp = "", totalLinhas = 1, totalEmpresas = 1),
             empresas = empresas.toList(),
         )
 
@@ -58,7 +52,7 @@ class TransitStatusMapperTest {
 
     @Test fun `maps company id, name and artesp flag`() {
         val lines = mapper.toLines(response(empresa(id = 2, nome = "ViaMobilidade", fiscalizacaoArtesp = false, linhas = listOf(linha()))))
-        val company = lines.first().company
+        val company = lines.first().company!!
         assertEquals(2, company.id)
         assertEquals("ViaMobilidade", company.name)
         assertEquals(false, company.isArtespMonitored)
@@ -101,8 +95,8 @@ class TransitStatusMapperTest {
 
     @Test fun `all lines from same company share the same company reference`() {
         val lines = mapper.toLines(response(empresa(nome = "CPTM", linhas = listOf(linha(codigo = "7"), linha(codigo = "8")))))
-        assertEquals("CPTM", lines[0].company.name)
-        assertEquals("CPTM", lines[1].company.name)
+        assertEquals("CPTM", lines[0].company?.name)
+        assertEquals("CPTM", lines[1].company?.name)
     }
 
     @Test fun `maps to empty stations when estacoes is null`() {
@@ -133,7 +127,7 @@ class TransitStatusMapperTest {
 
     @Test fun `maps full mock api response to 13 lines`() {
         val json = javaClass.getResourceAsStream("/mock-api-response.json")!!.reader().readText()
-        val response = jacksonObjectMapper().readValue(json, TransitStatusResponse::class.java)
+        val response = jacksonObjectMapper().readValue(json, ArtespStatusResponse::class.java)
         val lines = mapper.toLines(response)
 
         assertEquals(13, lines.size)

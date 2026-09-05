@@ -6,8 +6,9 @@ data class Line(
     val name: String,
     val code: String,
     val status: LineStatus,
-    val company: Company,
+    val company: Company?,
     val stations: List<Station>,
+    val source: String,
 ) {
     // stations are not stored in LineEntity and must be loaded separately if needed
     constructor(entity: LineEntity) : this(
@@ -22,11 +23,16 @@ data class Line(
                 updatedAt = entity.updatedAt,
             ),
         company =
-            Company(
-                id = entity.companyId,
-                name = entity.companyName,
-                isArtespMonitored = entity.isArtespMonitored,
-            ),
+            entity.companyName
+                .takeIf { it.isNotBlank() }
+                ?.let {
+                    Company(
+                        id = entity.companyId,
+                        name = it,
+                        isArtespMonitored = entity.isArtespMonitored,
+                    )
+                },
         stations = emptyList(),
+        source = entity.source,
     )
 }
