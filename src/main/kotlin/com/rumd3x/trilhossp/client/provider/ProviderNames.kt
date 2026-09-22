@@ -5,4 +5,5 @@ object ProviderNames {
     const val ARTESP = "artesp"
     const val CPTM = "cptm"
     const val METRO = "metro"
+    const val CCR = "ccr"
 }

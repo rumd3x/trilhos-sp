@@ -16,5 +16,6 @@ data class LineEntity(
     val classification: String,
     val isNormal: Boolean,
     val updatedAt: String,
+    // comma-separated list of provider source names (see Line.source)
     val source: String,
 )

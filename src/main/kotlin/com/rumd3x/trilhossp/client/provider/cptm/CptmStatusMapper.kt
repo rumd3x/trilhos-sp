@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component
 
 @Component
 class CptmStatusMapper {
-    private val name = ProviderNames.CPTM
 
     // this API does not report line names, so they must be mapped manually by id
     private val lineNames =
@@ -34,7 +33,7 @@ class CptmStatusMapper {
                         updatedAt = item.dataGeracao,
                     ),
                 stations = emptyList(),
-                source = name,
+                source = listOf(ProviderNames.CPTM),
             )
         }
 }

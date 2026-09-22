@@ -1,0 +1,164 @@
+{
+  "status": true,
+  "message": "",
+  "errorCode": "",
+  "data": {
+    "dataAtualizacao": "2026-09-22T19:37:55",
+    "concessoes": [
+      {
+        "uid": "CCRVQ",
+        "nome": "Motiva Linha Quatro",
+        "estados": "SP",
+        "linhas": [
+          {
+            "uid": "CCRVQ-L4",
+            "numero": "4",
+            "nome": "Amarela",
+            "corRgb": "#FCC540",
+            "statusLinha": { "codigo": "OperacaoNormal", "status": "Operação Normal", "descricao": "" }
+          }
+        ]
+      },
+      {
+        "uid": "CCRVM5e17",
+        "nome": "ViaMobilidade 5",
+        "estados": "SP",
+        "linhas": [
+          {
+            "uid": "CCRVM5e17-L5",
+            "numero": "5",
+            "nome": "Lilás",
+            "corRgb": "#784F9C",
+            "statusLinha": { "codigo": "OperacaoNormal", "status": "Operação Normal", "descricao": null }
+          }
+        ]
+      },
+      {
+        "uid": "CCRVM8e9",
+        "nome": "ViaMobilidade 8 e 9",
+        "estados": "SP",
+        "linhas": [
+          {
+            "uid": "CCRVM8e9-L8",
+            "numero": "8",
+            "nome": "Diamante",
+            "corRgb": "#AFA690",
+            "statusLinha": { "codigo": "OperacaoNormal", "status": "Operação Normal", "descricao": "" }
+          },
+          {
+            "uid": "CCRVM8e9-L9",
+            "numero": "9",
+            "nome": "Esmeralda",
+            "corRgb": "#34AEA4",
+            "statusLinha": { "codigo": "OperacaoNormal", "status": "Operação Normal", "descricao": null }
+          }
+        ]
+      },
+      {
+        "uid": "METRO",
+        "nome": "Metro SP",
+        "estados": "SP",
+        "linhas": [
+          {
+            "uid": "METRO-L1",
+            "numero": 1,
+            "nome": "Azul",
+            "corRgb": "#171796",
+            "statusLinha": { "codigo": "OperacaoNormal", "status": "Operação Normal", "descricao": "Operação Normal" }
+          },
+          {
+            "uid": "METRO-L2",
+            "numero": 2,
+            "nome": "Verde",
+            "corRgb": "#007A5E",
+            "statusLinha": { "codigo": "OperacaoNormal", "status": "Operação Normal", "descricao": "Operação Normal" }
+          },
+          {
+            "uid": "METRO-L3",
+            "numero": 3,
+            "nome": "Vermelha",
+            "corRgb": "#ED2E38",
+            "statusLinha": { "codigo": "OperacaoNormal", "status": "Operação Normal", "descricao": "Operação Normal" }
+          },
+          {
+            "uid": "METRO-L15",
+            "numero": 15,
+            "nome": "Prata",
+            "corRgb": "#8F8F8C",
+            "statusLinha": { "codigo": "OperacaoNormal", "status": "Operação Normal", "descricao": "Operação Normal" }
+          },
+          {
+            "uid": "METRO-L17",
+            "numero": 17,
+            "nome": "Ouro",
+            "corRgb": "#d58405",
+            "statusLinha": { "codigo": "OperacaoEncerrada", "status": "Operação Encerrada", "descricao": "Operação Encerrada" }
+          }
+        ]
+      },
+      {
+        "uid": "CPTM",
+        "nome": "CPTM",
+        "estados": "SP",
+        "linhas": [
+          {
+            "uid": "CPTM-L10",
+            "numero": 10,
+            "nome": "Turquesa",
+            "corRgb": "#17839C",
+            "statusLinha": { "codigo": "OperacaoNormal", "status": "Operação Normal", "descricao": "" }
+          }
+        ]
+      },
+      {
+        "uid": "TICTRENS",
+        "nome": "TIC Trens",
+        "estados": "SP",
+        "linhas": [
+          {
+            "uid": "TICTRENS-L6",
+            "numero": 6,
+            "nome": "Laranja",
+            "corRgb": "#F27C00",
+            "statusLinha": { "codigo": "OperacaoEncerrada", "status": "Operação Encerrada", "descricao": "" }
+          },
+          {
+            "uid": "TICTRENS-L7",
+            "numero": 7,
+            "nome": "Rubi",
+            "corRgb": "#AC184A",
+            "statusLinha": { "codigo": "OperacaoNormal", "status": "Operação Normal", "descricao": "Linha opera normalmente em toda sua extensão." }
+          }
+        ]
+      },
+      {
+        "uid": "TRIVIA",
+        "nome": "Trivia Trens",
+        "estados": "SP",
+        "linhas": [
+          {
+            "uid": "TRIVIA-L11",
+            "numero": 11,
+            "nome": "Coral",
+            "corRgb": "#EB601F",
+            "statusLinha": { "codigo": "OperacaoNormal", "status": "Operação Normal", "descricao": "" }
+          },
+          {
+            "uid": "TRIVIA-L12",
+            "numero": 12,
+            "nome": "Safira",
+            "corRgb": "#1B2477",
+            "statusLinha": { "codigo": "OperacaoNormal", "status": "Operação Normal", "descricao": "" }
+          },
+          {
+            "uid": "TRIVIA-L13",
+            "numero": 13,
+            "nome": "Jade",
+            "corRgb": "#29B352",
+            "statusLinha": { "codigo": "OperacaoNormal", "status": "Operação Normal", "descricao": "" }
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -27,9 +27,10 @@ data class LineDashboardItem(
                 companyName = entity.companyName,
                 source =
                     entity.source
-                        .takeIf { it.isNotBlank() }
-                        ?.let { ProviderDisplayName.labelFor(it) }
-                        .orEmpty(),
+                        .split(",")
+                        .map { it.trim() }
+                        .filter { it.isNotBlank() }
+                        .joinToString(", ") { ProviderDisplayName.labelFor(it) },
                 levelCss = levelCssFor(entity),
                 updatedAt = formatDate(entity.updatedAt),
             )

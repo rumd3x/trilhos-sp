@@ -8,6 +8,7 @@ enum class ProviderDisplayName(
     ARTESP(ProviderNames.ARTESP, "ARTESP"),
     CPTM(ProviderNames.CPTM, "CPTM"),
     METRO(ProviderNames.METRO, "Metrô SP"),
+    CCR(ProviderNames.CCR, "Grupo CCR"),
     ;
 
     companion object {

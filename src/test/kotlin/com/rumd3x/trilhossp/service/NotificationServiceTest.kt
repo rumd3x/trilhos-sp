@@ -44,7 +44,7 @@ class NotificationServiceTest {
             status = LineStatus("Operação Normal", "operacional", "", true, ""),
             company = Company(1, "ViaQuatro", true),
             stations = emptyList(),
-            source = "test",
+            source = listOf("test"),
         )
 
     private fun diff(

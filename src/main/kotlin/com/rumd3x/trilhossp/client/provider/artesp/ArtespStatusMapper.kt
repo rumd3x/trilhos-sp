@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component
 
 @Component
 class ArtespStatusMapper {
-    private val name = ProviderNames.ARTESP
 
     fun toLines(response: ArtespStatusResponse): List<Line> =
         response.empresas.flatMap { empresa ->
@@ -28,7 +27,7 @@ class ArtespStatusMapper {
                             updatedAt = linha.status.atualizadoEm,
                         ),
                     stations = linha.estacoes?.nomes?.map { Station(name = it) } ?: emptyList(),
-                    source = name,
+                    source = listOf(ProviderNames.ARTESP),
                 )
             }
         }

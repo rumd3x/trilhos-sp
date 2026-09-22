@@ -79,9 +79,9 @@ class TransitMonitoringJob(
     ): Line {
         // ARTESP is preferred regardless of recency; otherwise, the most recently updated line wins
         val preferred =
-            when (ProviderNames.ARTESP) {
-                a.source -> a
-                b.source -> b
+            when {
+                ProviderNames.ARTESP in a.source -> a
+                ProviderNames.ARTESP in b.source -> b
                 else -> if (parseUpdatedAt(b.status.updatedAt) > parseUpdatedAt(a.status.updatedAt)) b else a
             }
         val alternate = if (preferred === a) b else a
@@ -101,12 +101,14 @@ class TransitMonitoringJob(
                 else -> preferred.company ?: alternate.company
             }
         val mergedStations = (a.stations + b.stations).distinctBy { it.name }
+        val mergedSource = (a.source + b.source).distinct()
 
         return preferred.copy(
             name = preferred.name.ifBlank { alternate.name },
             status = mergedStatus,
             company = mergedCompany,
             stations = mergedStations,
+            source = mergedSource,
         )
     }
 

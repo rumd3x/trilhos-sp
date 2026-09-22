@@ -57,7 +57,7 @@ class TransitMonitoringJobTest {
         status = LineStatus(situation, "", "", situation.contains("Normal"), ""),
         company = Company(1, "Test", true),
         stations = emptyList(),
-        source = "test",
+        source = listOf("test"),
     )
 
     private fun lineFull(
@@ -68,7 +68,7 @@ class TransitMonitoringJobTest {
         updatedAt: String = "",
         companyName: String = "Test",
         stations: List<String> = emptyList(),
-        source: String = "test",
+        source: List<String> = listOf("test"),
     ) = Line(
         code = code,
         name = "Linha $code",
@@ -208,9 +208,9 @@ class TransitMonitoringJobTest {
     @Test fun `prefers artesp source over a more recently updated line from another provider`() {
         val secondProvider = mockk<LineStatusProvider>()
         every { provider.fetchLines() } returns
-            Mono.just(listOf(lineFull("4", "Lentidão", updatedAt = "2024-01-01T09:00:00", source = ProviderNames.ARTESP)))
+            Mono.just(listOf(lineFull("4", "Lentidão", updatedAt = "2024-01-01T09:00:00", source = listOf(ProviderNames.ARTESP))))
         every { secondProvider.fetchLines() } returns
-            Mono.just(listOf(lineFull("4", "Operação Normal", updatedAt = "2024-01-01T12:00:00", source = ProviderNames.CPTM)))
+            Mono.just(listOf(lineFull("4", "Operação Normal", updatedAt = "2024-01-01T12:00:00", source = listOf(ProviderNames.CPTM))))
         val captured = slot<List<Line>>()
         every { lineService.replaceAll(capture(captured)) } returns Mono.empty()
 
@@ -227,9 +227,9 @@ class TransitMonitoringJobTest {
     @Test fun `falls back to most recently updated line when neither source is artesp`() {
         val secondProvider = mockk<LineStatusProvider>()
         every { provider.fetchLines() } returns
-            Mono.just(listOf(lineFull("4", "Lentidão", updatedAt = "2024-01-01T09:00:00", source = ProviderNames.CPTM)))
+            Mono.just(listOf(lineFull("4", "Lentidão", updatedAt = "2024-01-01T09:00:00", source = listOf(ProviderNames.CPTM))))
         every { secondProvider.fetchLines() } returns
-            Mono.just(listOf(lineFull("4", "Operação Normal", updatedAt = "2024-01-01T12:00:00", source = ProviderNames.METRO)))
+            Mono.just(listOf(lineFull("4", "Operação Normal", updatedAt = "2024-01-01T12:00:00", source = listOf(ProviderNames.METRO))))
         val captured = slot<List<Line>>()
         every { lineService.replaceAll(capture(captured)) } returns Mono.empty()
 
@@ -254,7 +254,7 @@ class TransitMonitoringJobTest {
                         classification = "",
                         descricao = "",
                         updatedAt = "2024-01-01T09:00:00",
-                        source = ProviderNames.ARTESP,
+                        source = listOf(ProviderNames.ARTESP),
                     ),
                 ),
             )
@@ -267,7 +267,7 @@ class TransitMonitoringJobTest {
                         classification = "C",
                         descricao = "Tudo certo",
                         updatedAt = "2024-01-01T12:00:00",
-                        source = ProviderNames.CPTM,
+                        source = listOf(ProviderNames.CPTM),
                     ),
                 ),
             )
@@ -325,5 +325,33 @@ class TransitMonitoringJobTest {
                 .stations
                 .map { it.name },
         )
+    }
+
+    @Test fun `merged line combines sources from both providers without duplicates`() {
+        val secondProvider = mockk<LineStatusProvider>()
+        every { provider.fetchLines() } returns
+            Mono.just(listOf(lineFull("4", "Operação Normal", source = listOf(ProviderNames.CPTM))))
+        every { secondProvider.fetchLines() } returns
+            Mono.just(listOf(lineFull("4", "Operação Normal", source = listOf(ProviderNames.METRO))))
+        val captured = slot<List<Line>>()
+        every { lineService.replaceAll(capture(captured)) } returns Mono.empty()
+
+        TransitMonitoringJob(listOf(provider, secondProvider), lineService, notificationService).pollTransitStatus()
+
+        assertEquals(listOf(ProviderNames.CPTM, ProviderNames.METRO), captured.captured.first().source)
+    }
+
+    @Test fun `merged line does not duplicate a source reported by both providers`() {
+        val secondProvider = mockk<LineStatusProvider>()
+        every { provider.fetchLines() } returns
+            Mono.just(listOf(lineFull("4", "Operação Normal", source = listOf(ProviderNames.CPTM))))
+        every { secondProvider.fetchLines() } returns
+            Mono.just(listOf(lineFull("4", "Operação Normal", source = listOf(ProviderNames.CPTM))))
+        val captured = slot<List<Line>>()
+        every { lineService.replaceAll(capture(captured)) } returns Mono.empty()
+
+        TransitMonitoringJob(listOf(provider, secondProvider), lineService, notificationService).pollTransitStatus()
+
+        assertEquals(listOf(ProviderNames.CPTM), captured.captured.first().source)
     }
 }

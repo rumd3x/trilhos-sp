@@ -8,7 +8,7 @@ data class Line(
     val status: LineStatus,
     val company: Company?,
     val stations: List<Station>,
-    val source: String,
+    val source: List<String>,
 ) {
     // stations are not stored in LineEntity and must be loaded separately if needed
     constructor(entity: LineEntity) : this(
@@ -33,6 +33,6 @@ data class Line(
                     )
                 },
         stations = emptyList(),
-        source = entity.source,
+        source = entity.source.split(",").map { it.trim() }.filter { it.isNotBlank() },
     )
 }

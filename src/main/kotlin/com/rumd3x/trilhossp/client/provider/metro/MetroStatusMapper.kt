@@ -12,7 +12,6 @@ import java.time.format.DateTimeFormatterBuilder
 
 @Component
 class MetroStatusMapper {
-    private val name = ProviderNames.METRO
 
     // dd/MM/yyyy HH:mm[:ss], seconds are sometimes omitted by the source page
     private val inputFormatter =
@@ -75,7 +74,7 @@ class MetroStatusMapper {
                     updatedAt = parseUpdatedAt(dateText),
                 ),
             stations = emptyList(),
-            source = name,
+            source = listOf(ProviderNames.METRO),
         )
     }
 

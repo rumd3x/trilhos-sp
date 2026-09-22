@@ -18,6 +18,6 @@ class LineEntityMapper {
             descricao = line.status.descricao,
             isNormal = line.status.isNormal,
             updatedAt = line.status.updatedAt,
-            source = line.source,
+            source = line.source.joinToString(","),
         )
 }
