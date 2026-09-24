@@ -27,14 +27,15 @@ O status das linhas é obtido de múltiplas fontes e mesclado automaticamente (q
 | [API Trilhos (ARTESP)](https://ccm.artesp.sp.gov.br/metroferroviario/api/docs/) | Todas as linhas fiscalizadas pela ARTESP | API Key |
 | [CPTM](https://www.cptm.sp.gov.br/) | Linhas 10, 11, 12 e 13 | Nenhuma |
 | [Metrô de São Paulo](https://www.metro.sp.gov.br/) | Linhas 1, 2, 3, 4, 5, 15 e 17 | Nenhuma |
+| [Grupo CCR](https://www.motiva.com.br/) | Linhas 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 15, 17 | Nenhuma |
 
 > A `ARTESP_API_KEY` **não é mais obrigatória** para a aplicação rodar — sem ela, a fonte ARTESP simplesmente falha silenciosamente a cada ciclo e as demais fontes (CPTM, Metrô) continuam funcionando normalmente. Porém, sem essa chave você perde: as linhas exclusivas da ARTESP (7, 8 e 9, operadas por TIC Trens/ViaMobilidade), a lista de estações de cada linha, e o nome oficial das empresas operadoras nas linhas que as demais fontes também cobrem.
 
 ---
 
-## Obtendo uma API Key
+## Obtendo uma API Key ARTESP
 
-O acesso à API requer autenticação desde 25/06/2026.
+O acesso à API ARTESP requer autenticação desde 25/06/2026.
 
 1. Faça login no portal e acesse [Minha Conta](https://ccm.artesp.sp.gov.br/contas/minha-conta/)
 2. Na seção **Minhas APIs**, solicite acesso ao produto **API Trilhos**
@@ -111,6 +112,7 @@ Exemplo para dias úteis: `NOTIFY_DAYS=1,2,3,4,5`
 | `3` | Linha 3 Vermelha – Metrô |
 | `4` | Linha 4 Amarela – ViaQuatro |
 | `5` | Linha 5 Lilás – ViaMobilidade |
+| `6` | Linha 6 Laranja - Metrô |
 | `7` | Linha 7 Rubi – CPTM |
 | `8` | Linha 8 Diamante – ViaMobilidade |
 | `9` | Linha 9 Esmeralda – ViaMobilidade |
@@ -119,5 +121,6 @@ Exemplo para dias úteis: `NOTIFY_DAYS=1,2,3,4,5`
 | `12` | Linha 12 Safira – CPTM |
 | `13` | Linha 13 Jade – CPTM |
 | `15` | Linha 15 Prata – Metrô |
+| `17` | Linha 17 Ouro – Metrô |
 
 Exemplo: `NOTIFY_LINES=4,5,9`
