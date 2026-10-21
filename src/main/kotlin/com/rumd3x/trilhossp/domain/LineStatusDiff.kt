@@ -14,7 +14,12 @@ data class LineStatusDiff(
                 else -> 4
             }
 
-    fun hasChange(): Boolean = (oldStatus.situation != newStatus.situation || oldStatus.descricao != newStatus.descricao)
+    fun hasChange(): Boolean {
+        val situationChanged = oldStatus.situation != newStatus.situation
+        val newDescriptionIsValidChange = !listOf("Operação Encerrada", "Operação Normal").contains(newStatus.descricao)
+        val descriptionChanged = (oldStatus.descricao != newStatus.descricao) && newDescriptionIsValidChange
+        return situationChanged || descriptionChanged
+    }
 
     fun isNeutral(): Boolean {
         val startedNow = oldStatus.situation.lowercase().contains("encerrada")

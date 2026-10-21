@@ -6,14 +6,16 @@ import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 class LineStatusDiffTest {
-    private fun status(situation: String) =
-        LineStatus(
-            situation = situation,
-            classification = "",
-            descricao = "",
-            isNormal = true,
-            updatedAt = "",
-        )
+    private fun status(
+        situation: String,
+        descricao: String = "",
+    ) = LineStatus(
+        situation = situation,
+        classification = "",
+        descricao = descricao,
+        isNormal = true,
+        updatedAt = "",
+    )
 
     private fun diff(
         old: String,
@@ -22,6 +24,40 @@ class LineStatusDiffTest {
         oldStatus = status(old),
         newStatus = status(new),
     )
+
+    private fun diffWithDescription(
+        oldSituation: String,
+        oldDescription: String,
+        newSituation: String,
+        newDescription: String,
+    ) = LineStatusDiff(
+        oldStatus = status(oldSituation, oldDescription),
+        newStatus = status(newSituation, newDescription),
+    )
+
+    // hasChange
+
+    @Test fun `hasChange when situation changes`() = assertTrue(diff("Operação Normal", "Lentidão").hasChange())
+
+    @Test fun `hasChange false when nothing changes`() = assertFalse(diffWithDescription("Lentidão", "A", "Lentidão", "A").hasChange())
+
+    @Test fun `hasChange when description changes to a new meaningful text`() =
+        assertTrue(diffWithDescription("Lentidão", "Falha em trem", "Lentidão", "Falha em via").hasChange())
+
+    @Test fun `hasChange false when description changes to Operação Normal`() =
+        assertFalse(diffWithDescription("Lentidão", "Falha em trem", "Lentidão", "Operação Normal").hasChange())
+
+    @Test fun `hasChange false when description changes to Operação Encerrada`() =
+        assertFalse(diffWithDescription("Lentidão", "Falha em trem", "Lentidão", "Operação Encerrada").hasChange())
+
+    @Test fun `hasChange when situation changes even if description is Operação Normal`() =
+        assertTrue(diffWithDescription("Lentidão", "Falha em trem", "Operação Normal", "Operação Normal").hasChange())
+
+    @Test fun `hasChange when situation changes even if description is Operação Encerrada`() =
+        assertTrue(diffWithDescription("Operação Normal", "", "Encerrada", "Operação Encerrada").hasChange())
+
+    @Test fun `hasChange when description goes from Operação Normal to a meaningful text`() =
+        assertTrue(diffWithDescription("Lentidão", "Operação Normal", "Lentidão", "Falha em via").hasChange())
 
     // isNeutral
 
