@@ -16,8 +16,11 @@ data class LineStatusDiff(
 
     fun hasChange(): Boolean {
         val situationChanged = oldStatus.situation != newStatus.situation
-        val newDescriptionIsValidChange = !listOf("Operação Encerrada", "Operação Normal").contains(newStatus.descricao)
-        val descriptionChanged = (oldStatus.descricao != newStatus.descricao) && newDescriptionIsValidChange
+        val ignoredDescriptions = listOf("Operação Encerrada", "Operação Normal")
+        val newDescriptionIsValidChange = !ignoredDescriptions.contains(newStatus.descricao)
+        val clearedIgnoredDescription = newStatus.descricao.isEmpty() && ignoredDescriptions.contains(oldStatus.descricao)
+        val descriptionChanged =
+            (oldStatus.descricao != newStatus.descricao) && newDescriptionIsValidChange && !clearedIgnoredDescription
         return situationChanged || descriptionChanged
     }
 

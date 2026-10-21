@@ -59,6 +59,12 @@ class LineStatusDiffTest {
     @Test fun `hasChange when description goes from Operação Normal to a meaningful text`() =
         assertTrue(diffWithDescription("Lentidão", "Operação Normal", "Lentidão", "Falha em via").hasChange())
 
+    @Test fun `hasChange false when description goes from Operação Encerrada to empty`() =
+        assertFalse(diffWithDescription("Lentidão", "Operação Encerrada", "Lentidão", "").hasChange())
+
+    @Test fun `hasChange false when description goes from Operação Normal to empty`() =
+        assertFalse(diffWithDescription("Lentidão", "Operação Normal", "Lentidão", "").hasChange())
+
     // isNeutral
 
     @Test fun `isNeutral when operation closes for the night`() = assertTrue(diff("Operação Normal", "Encerrada").isNeutral())
